@@ -10,10 +10,15 @@ function App() {
     image: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleImage = (event) =>
+    setUser({ ...user, image: event.target.files[0] });
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData();
+    for (const key in user) formData.append(key, user[key]);
     try {
-      axios.post('http://localhost:5000/users', user);
+      await axios.post('http://localhost:5000/users', formData);
     } catch (error) {
       console.log(error);
     }
@@ -35,7 +40,11 @@ function App() {
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Image</Form.Label>
-          <Form.Control type="file" placeholder="Image" />
+          <Form.Control
+            onChange={handleImage}
+            type="file"
+            placeholder="Image"
+          />
         </Form.Group>
         <Button variant="primary" type="submit" onClick={handleSubmit}>
           Submit
