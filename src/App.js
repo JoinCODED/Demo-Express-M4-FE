@@ -10,10 +10,10 @@ function App() {
     image: '',
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      axios.post('http://localhost:5000/users', user);
+      await axios.post('http://localhost:5000/users', user);
     } catch (error) {
       console.log(error);
     }
